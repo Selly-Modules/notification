@@ -51,13 +51,14 @@ func NewClient(cfg Config) (*Client, error) {
 // PushToUsers push notification to list user id
 func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) {
 	p := pushRequest{
-		APIKey: c.Config.APIKey,
-		Title:  payload.Title,
-		Body:   payload.Body,
-		Data:   payload.Data,
-		SendBy: SendByUsers,
-		Users:  payload.Users,
-		Label:  payload.Label,
+		APIKey:   c.Config.APIKey,
+		Title:    payload.Title,
+		Body:     payload.Body,
+		Data:     payload.Data,
+		SendBy:   SendByUsers,
+		Users:    payload.Users,
+		Label:    payload.Label,
+		Category: payload.Category,
 	}
 	msg, err := c.natsServer.Request(SubjectPushNotification, toBytes(p))
 	if err != nil {

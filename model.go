@@ -10,11 +10,12 @@ type Config struct {
 
 // PushRequest ...
 type PushRequest struct {
-	Title string   `json:"title"`
-	Body  string   `json:"body"`
-	Data  string   `json:"data"`
-	Users []string `json:"users"`
-	Label string   `json:"label"`
+	Title    string   `json:"title"`
+	Body     string   `json:"body"`
+	Data     string   `json:"data"`
+	Users    []string `json:"users"`
+	Label    string   `json:"label"`
+	Category string   `json:"category"`
 }
 
 // PushResponse ...
@@ -24,14 +25,15 @@ type PushResponse struct {
 }
 
 type pushRequest struct {
-	APIKey string   `json:"apiKey"`
-	Title  string   `json:"title"`
-	Body   string   `json:"body"`
-	Data   string   `json:"data"`
-	SendBy string   `json:"sendBy"`
-	Users  []string `json:"users"`
-	Topic  string   `json:"topic"`
-	Label  string   `json:"label"`
+	APIKey   string   `json:"apiKey"`
+	Title    string   `json:"title"`
+	Body     string   `json:"body"`
+	Data     string   `json:"data"`
+	SendBy   string   `json:"sendBy"`
+	Users    []string `json:"users"`
+	Topic    string   `json:"topic"`
+	Label    string   `json:"label"`
+	Category string   `json:"category"`
 }
 
 // Query ...
