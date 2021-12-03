@@ -75,6 +75,11 @@ type Read struct {
 	ID     string `json:"id"`
 }
 
+// ReadResponse ...
+type ReadResponse struct {
+	Error string `json:"error"`
+}
+
 type read struct {
 	APIKey string `json:"apiKey"`
 	ID     string `json:"id"`
@@ -84,6 +89,11 @@ type read struct {
 type CountUnread struct {
 	User     string `json:"user"`
 	Category string `json:"category"`
+}
+
+// CountUnreadResponse ...
+type CountUnreadResponse struct {
+	Total int64 `json:"total"`
 }
 
 type countUnread struct {

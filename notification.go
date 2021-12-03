@@ -82,7 +82,7 @@ func (c *Client) Query(q Query) (ListNotificationResponse, error) {
 		Page:     q.Page,
 		Limit:    q.Limit,
 	}
-	msg, err := c.natsServer.Request(SubjectPushNotification, toBytes(p))
+	msg, err := c.natsServer.Request(SubjectGetNotification, toBytes(p))
 	if err != nil {
 		return ListNotificationResponse{}, err
 	}
@@ -91,6 +91,44 @@ func (c *Client) Query(q Query) (ListNotificationResponse, error) {
 		return ListNotificationResponse{}, err
 	}
 	return res, nil
+}
+
+// CountUnread count total unread notification
+func (c *Client) CountUnread(q CountUnread) (int64, error) {
+	p := countUnread{
+		APIKey:   c.Config.APIKey,
+		User:     q.User,
+		Category: q.Category,
+	}
+	msg, err := c.natsServer.Request(SubjectCountUnreadNotification, toBytes(p))
+	if err != nil {
+		return 0, err
+	}
+	var res CountUnreadResponse
+	if err := json.Unmarshal(msg.Data, &res); err != nil {
+		return 0, err
+	}
+	return res.Total, nil
+}
+
+// Read mark notification as read
+func (c *Client) Read(notificationID string) error {
+	p := read{
+		APIKey: c.Config.APIKey,
+		ID:     notificationID,
+	}
+	msg, err := c.natsServer.Request(SubjectReadNotification, toBytes(p))
+	if err != nil {
+		return err
+	}
+	var res ReadResponse
+	if err := json.Unmarshal(msg.Data, &res); err != nil {
+		return err
+	}
+	if res.Error != "" {
+		err = errors.New(res.Error)
+	}
+	return err
 }
 
 func toBytes(data interface{}) []byte {
