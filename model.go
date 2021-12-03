@@ -21,7 +21,6 @@ type PushRequest struct {
 // PushResponse ...
 type PushResponse struct {
 	RequestID string `json:"requestId"`
-	Error     string `json:"error"`
 }
 
 type pushRequest struct {

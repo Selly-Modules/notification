@@ -64,14 +64,17 @@ func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) 
 	if err != nil {
 		return "", err
 	}
-	var res PushResponse
+	var res struct {
+		Data  PushResponse `json:"data"`
+		Error string       `json:"error"`
+	}
 	if err := json.Unmarshal(msg.Data, &res); err != nil {
 		return "", err
 	}
 	if res.Error != "" {
 		return "", errors.New(res.Error)
 	}
-	return res.RequestID, nil
+	return res.Data.RequestID, nil
 }
 
 // Query get list notification by user id
@@ -87,11 +90,17 @@ func (c *Client) Query(q Query) (ListNotificationResponse, error) {
 	if err != nil {
 		return ListNotificationResponse{}, err
 	}
-	var res ListNotificationResponse
+	var res struct {
+		Data  ListNotificationResponse `json:"data"`
+		Error string                   `json:"error"`
+	}
 	if err := json.Unmarshal(msg.Data, &res); err != nil {
 		return ListNotificationResponse{}, err
 	}
-	return res, nil
+	if res.Error != "" {
+		return ListNotificationResponse{}, errors.New(res.Error)
+	}
+	return res.Data, nil
 }
 
 // CountUnread count total unread notification
@@ -105,11 +114,17 @@ func (c *Client) CountUnread(q CountUnread) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	var res CountUnreadResponse
+	var res struct {
+		Data  CountUnreadResponse `json:"data"`
+		Error string              `json:"error"`
+	}
 	if err := json.Unmarshal(msg.Data, &res); err != nil {
 		return 0, err
 	}
-	return res.Total, nil
+	if res.Error != "" {
+		return 0, errors.New(res.Error)
+	}
+	return res.Data.Total, nil
 }
 
 // Read mark notification as read
