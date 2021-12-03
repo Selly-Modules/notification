@@ -14,8 +14,8 @@ type PushRequest struct {
 	Body     string   `json:"body"`
 	Data     string   `json:"data"`
 	Users    []string `json:"users"`
-	Label    string   `json:"label"`
-	Category string   `json:"category"`
+	Label    string   `json:"label,omitempty"`
+	Category string   `json:"category,omitempty"`
 }
 
 // PushResponse ...
@@ -72,8 +72,7 @@ type ListNotificationResponse struct {
 
 // Read ...
 type Read struct {
-	APIKey string `json:"apiKey"`
-	ID     string `json:"id"`
+	ID string `json:"id"`
 }
 
 // ReadResponse ...
@@ -89,7 +88,7 @@ type read struct {
 // CountUnread ...
 type CountUnread struct {
 	User     string `json:"user"`
-	Category string `json:"category"`
+	Category string `json:"category,omitempty"`
 }
 
 // CountUnreadResponse ...
