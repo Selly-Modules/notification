@@ -48,7 +48,7 @@ func NewClient(cfg Config) (*Client, error) {
 	return c, nil
 }
 
-// PushToUsers ...
+// PushToUsers push notification to list user id
 func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) {
 	p := pushRequest{
 		APIKey: c.Config.APIKey,
@@ -71,6 +71,26 @@ func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) 
 		return "", errors.New(res.Error)
 	}
 	return res.RequestID, nil
+}
+
+// Query get list notification by user id
+func (c *Client) Query(q Query) (ListNotificationResponse, error) {
+	p := query{
+		APIKey:   c.Config.APIKey,
+		User:     q.User,
+		Category: q.Category,
+		Page:     q.Page,
+		Limit:    q.Limit,
+	}
+	msg, err := c.natsServer.Request(SubjectPushNotification, toBytes(p))
+	if err != nil {
+		return ListNotificationResponse{}, err
+	}
+	var res ListNotificationResponse
+	if err := json.Unmarshal(msg.Data, &res); err != nil {
+		return ListNotificationResponse{}, err
+	}
+	return res, nil
 }
 
 func toBytes(data interface{}) []byte {

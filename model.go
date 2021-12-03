@@ -50,6 +50,26 @@ type query struct {
 	Limit    int64  `json:"limit,omitempty"`
 }
 
+// Notification ...
+type Notification struct {
+	ID         string `json:"id"`
+	Category   string `json:"category,omitempty"`
+	Title      string `json:"title"`
+	Body       string `json:"body"`
+	IsRead     bool   `json:"isRead"`
+	Data       string `json:"data,omitempty"`
+	CreatedAt  string `json:"createdAt"`
+	LastPushAt string `json:"lastPushAt"`
+}
+
+// ListNotificationResponse ...
+type ListNotificationResponse struct {
+	List  []Notification `json:"list"`
+	Total int64          `json:"total"`
+	Limit int64          `json:"limit"`
+}
+
+// Read ...
 type Read struct {
 	APIKey string `json:"apiKey"`
 	ID     string `json:"id"`
