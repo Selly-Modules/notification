@@ -18,6 +18,8 @@ const (
 	SubjectGetNotification         = "get_notification"
 	SubjectReadNotification        = "read_notification"
 	SubjectCountUnreadNotification = "count_unread_notification"
+	SubjectSubscribeTopic          = "subscribe_topic"
+	SubjectUnsubscribeTopic        = "unsubscribe_topic"
 )
 
 // Client ...
@@ -137,7 +139,53 @@ func (c *Client) Read(notificationID string) error {
 	if err != nil {
 		return err
 	}
-	var res ReadResponse
+	var res CommonError
+	if err := json.Unmarshal(msg.Data, &res); err != nil {
+		return err
+	}
+	if res.Error != "" {
+		err = errors.New(res.Error)
+	}
+	return err
+}
+
+// Subscribe tokens to topic
+func (c *Client) Subscribe(topic string, tokens []string) error {
+	p := subscribe{
+		Subscribe: Subscribe{
+			Tokens: tokens,
+			Topic:  topic,
+		},
+		APIKey: c.Config.APIKey,
+	}
+	msg, err := c.natsServer.Request(SubjectSubscribeTopic, toBytes(p))
+	if err != nil {
+		return err
+	}
+	var res CommonError
+	if err := json.Unmarshal(msg.Data, &res); err != nil {
+		return err
+	}
+	if res.Error != "" {
+		err = errors.New(res.Error)
+	}
+	return err
+}
+
+// Unsubscribe tokens from topic
+func (c *Client) Unsubscribe(topic string, tokens []string) error {
+	p := subscribe{
+		Subscribe: Subscribe{
+			Tokens: tokens,
+			Topic:  topic,
+		},
+		APIKey: c.Config.APIKey,
+	}
+	msg, err := c.natsServer.Request(SubjectUnsubscribeTopic, toBytes(p))
+	if err != nil {
+		return err
+	}
+	var res CommonError
 	if err := json.Unmarshal(msg.Data, &res); err != nil {
 		return err
 	}

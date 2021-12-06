@@ -55,4 +55,9 @@ func main() {
 		Category: "order",
 	})
 	fmt.Println("Count: 2", total, err)
+
+	err = c.Subscribe("test", []string{
+		"eX1gEc7WokSHh-zJ3WR5Hn:APA91bFZDuzkjjFFL6TNpMg0ot93a0wsypWi4aCdm7M2x6AihgjS_QWsbKSFCT4hNhv_d8wKGy-DG6_3e8OlwPiWiJB4R33xLbbUekgxKcfCiiFooIC1E1OE3XWkvUtn4egn8aLG5jqv",
+	})
+	fmt.Println("Subscribe err: ", err)
 }

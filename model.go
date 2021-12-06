@@ -75,11 +75,6 @@ type Read struct {
 	ID string `json:"id"`
 }
 
-// ReadResponse ...
-type ReadResponse struct {
-	Error string `json:"error"`
-}
-
 type read struct {
 	APIKey string `json:"apiKey"`
 	ID     string `json:"id"`
@@ -100,4 +95,20 @@ type countUnread struct {
 	APIKey   string `json:"apiKey"`
 	User     string `json:"user"`
 	Category string `json:"category"`
+}
+
+// CommonError ...
+type CommonError struct {
+	Error string `json:"error"`
+}
+
+// Subscribe ...
+type Subscribe struct {
+	Tokens []string `json:"tokens"`
+	Topic  string   `json:"topic"`
+}
+
+type subscribe struct {
+	Subscribe
+	APIKey string `json:"apiKey"`
 }
