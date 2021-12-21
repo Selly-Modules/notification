@@ -16,6 +16,7 @@ type PushRequest struct {
 	Users    []string `json:"users"`
 	Label    string   `json:"label,omitempty"`
 	Category string   `json:"category,omitempty"`
+	Sound    string   `json:"sound,omitempty"`
 }
 
 // PushResponse ...
@@ -33,6 +34,7 @@ type pushRequest struct {
 	Topic    string   `json:"topic"`
 	Label    string   `json:"label"`
 	Category string   `json:"category"`
+	Sound    string   `json:"sound,omitempty"`
 }
 
 // Query ...

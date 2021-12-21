@@ -61,6 +61,7 @@ func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) 
 		Users:    payload.Users,
 		Label:    payload.Label,
 		Category: payload.Category,
+		Sound:    payload.Sound,
 	}
 	msg, err := c.natsServer.Request(SubjectPushNotification, toBytes(p))
 	if err != nil {
