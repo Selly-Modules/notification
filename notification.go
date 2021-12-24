@@ -8,6 +8,9 @@ import (
 	"github.com/Selly-Modules/natsio"
 )
 
+// version specify current version of client
+const version = "1.0.2"
+
 const (
 	SendByTopic = "topic"
 	SendByUsers = "users"
@@ -53,6 +56,7 @@ func NewClient(cfg Config) (*Client, error) {
 // PushToUsers push notification to list user id
 func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) {
 	p := pushRequest{
+		Version:  version,
 		APIKey:   c.Config.APIKey,
 		Title:    payload.Title,
 		Body:     payload.Body,
@@ -62,6 +66,7 @@ func (c *Client) PushToUsers(payload PushRequest) (requestID string, err error) 
 		Label:    payload.Label,
 		Category: payload.Category,
 		Sound:    payload.Sound,
+		Link:     payload.Link,
 	}
 	msg, err := c.natsServer.Request(SubjectPushNotification, toBytes(p))
 	if err != nil {

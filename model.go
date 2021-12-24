@@ -17,6 +17,7 @@ type PushRequest struct {
 	Label    string   `json:"label,omitempty"`
 	Category string   `json:"category,omitempty"`
 	Sound    *Sound   `json:"sound,omitempty"`
+	Link     string   `json:"link"` // for webpush
 }
 
 // Sound ...
@@ -31,6 +32,7 @@ type PushResponse struct {
 }
 
 type pushRequest struct {
+	Version  string   `json:"version"`
 	APIKey   string   `json:"apiKey"`
 	Title    string   `json:"title"`
 	Body     string   `json:"body"`
@@ -41,6 +43,7 @@ type pushRequest struct {
 	Label    string   `json:"label"`
 	Category string   `json:"category"`
 	Sound    *Sound   `json:"sound,omitempty"`
+	Link     string   `json:"link"`
 }
 
 // Query ...
